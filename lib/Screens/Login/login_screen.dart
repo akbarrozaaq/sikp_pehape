@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
       String parentNimMhsAPI = data['parent_nimmhs'];
       String pesan = data['message'];
       if (value == 1) {
-        Get.offAll(HomeScreen());
+        Get.offAll(Home());
         setState(() {
           savePref(value, parentNamaAPI, mhsNamaAPI, parentNimMhsAPI);
         });

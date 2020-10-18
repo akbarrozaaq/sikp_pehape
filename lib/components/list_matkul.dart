@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ListKhs extends StatelessWidget {
+class ListMatkul extends StatelessWidget {
   final String namaMatkul;
   final String sksMatkul;
   final String nilaiMatkul;
 
-  const ListKhs({Key key, this.namaMatkul, this.sksMatkul, this.nilaiMatkul})
+  const ListMatkul({Key key, this.namaMatkul, this.sksMatkul, this.nilaiMatkul})
       : super(key: key);
 
   @override

@@ -33,7 +33,7 @@ class CustomDivider extends StatelessWidget {
   Expanded buildDivider() {
     return Expanded(
       child: Divider(
-        color: kRedColor,
+        color: kBlueColor,
         height: 1.5,
       ),
     );

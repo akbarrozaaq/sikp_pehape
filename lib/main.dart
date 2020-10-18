@@ -77,7 +77,7 @@ class _MyAppState extends State<MyApp> {
             primaryColor: kPrimaryColor,
             scaffoldBackgroundColor: Colors.white,
           ),
-          home: HomeScreen(),
+          home: Home(),
         );
         break;
     }

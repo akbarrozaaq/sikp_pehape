@@ -8,12 +8,12 @@ import 'package:pehape_sikp/Screens/screens.dart';
 import 'package:pehape_sikp/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HomeScreen extends StatefulWidget {
+class Home extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomeState createState() => _HomeState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeState extends State<Home> {
   String mhsNama = "", parentNama = "", parentNimMhs = "";
 
   getPref() async {
@@ -47,16 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          Positioned(
-            bottom: 0,
-            child: Padding(
-              padding: EdgeInsets.only(left: 16.0, right: 16.0),
-              child: SvgPicture.asset(
-                "assets/icons/home.svg",
-                height: size.height * 0.4,
-              ),
-            ),
-          ),
           SafeArea(
             child: Padding(
               padding: EdgeInsets.all(16.0),
@@ -80,7 +70,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Radius.circular(8),
                                     ),
                                   ),
-                                  child: Text("Nama Wali"),
+                                  child: Text(
+                                    "Nama Wali",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 ),
                                 Text(
                                   "$parentNama",
@@ -123,15 +116,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Container(
-                    height: size.height * 0.16,
-                    width: size.width,
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(color: kPrimaryColor, width: 2),
-                      // borderRadius: BorderRadius.only(
-                      //   bottomLeft: Radius.circular(90),
-                      //   bottomRight: Radius.circular(90),
-                      // ),
                       borderRadius: BorderRadius.all(
                         Radius.circular(16),
                       ),
@@ -155,52 +143,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(
                     height: size.height * 0.04,
                   ),
-                  // Container(
-                  //   margin: EdgeInsets.all(16),
-                  //   child: Text(
-                  //     "Sistem Informasi\nPemantauan Hasil Pembelajaran (PHP)\nUNIB",
-                  //     textAlign: TextAlign.center,
-                  //   ),
-                  // ),
-
-                  // Container(
-                  //   height: 64,
-                  //   margin: EdgeInsets.only(bottom: 20),
-                  //   child: Row(
-                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                  //     children: <Widget>[
-                  //       CircleAvatar(
-                  //         radius: 32,
-                  //         backgroundImage: NetworkImage(
-                  //             'https://i.pinimg.com/originals/78/07/03/78070395106fcd1c3e66e3b3810568bb.jpg'),
-                  //       ),
-                  //       SizedBox(
-                  //         width: 16,
-                  //       ),
-                  //       Column(
-                  //         mainAxisAlignment: MainAxisAlignment.center,
-                  //         crossAxisAlignment: CrossAxisAlignment.start,
-                  //         children: <Widget>[
-                  //           Text(
-                  //             'Zainal Arifin',
-                  //             style: TextStyle(
-                  //                 // fontFamily: "Montserrat Medium",
-                  //                 color: Colors.black,
-                  //                 fontSize: 20),
-                  //           ),
-                  //           Text(
-                  //             'Zainal@gmail.com',
-                  //             style: TextStyle(
-                  //               fontSize: 14,
-                  //               color: Colors.black,
-                  //               // fontFamily: "Montserrat Regular",
-                  //             ),
-                  //           )
-                  //         ],
-                  //       )
-                  //     ],
-                  //   ),
-                  // ),
                   Expanded(
                     child: GridView.count(
                       mainAxisSpacing: 10,
@@ -209,7 +151,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisCount: 2,
                       children: <Widget>[
                         GestureDetector(
-                          onTap: () => Get.to(Presensi()),
+                          onTap: () =>
+                              Get.to(Presensi(), arguments: parentNimMhs),
                           child: Card(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8)),
@@ -282,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Get.to(ProfileUser(), arguments: parentNimMhs);
+                            Get.to(PersonalData(), arguments: parentNimMhs);
                           },
                           child: Card(
                             shape: RoundedRectangleBorder(
@@ -310,35 +253,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ],
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: Container(
-              margin: EdgeInsets.symmetric(vertical: 10),
-              width: size.width * 0.8,
-              child: FlatButton(
-                color: kRedLightColor,
-                shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                        color: kRedColor, width: 1, style: BorderStyle.solid),
-                    borderRadius: BorderRadius.circular(50)),
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-                onPressed: () async {
-                  SharedPreferences preferences =
-                      await SharedPreferences.getInstance();
-                  preferences.remove('value');
-                  Get.off(LoginScreen());
-                },
-                child: Text(
-                  "Log out",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: kRedColor,
-                  ),
-                ),
               ),
             ),
           ),

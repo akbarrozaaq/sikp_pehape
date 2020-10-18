@@ -1,8 +1,4 @@
-import 'dart:convert';
-import 'package:pehape_sikp/service/base_url.dart';
-import 'package:http/http.dart' as http;
-
-class MahasiswaModel {
+class PersonalDataModel {
   final String parentNama;
   final String parentEmail;
   final String nama;
@@ -13,7 +9,7 @@ class MahasiswaModel {
   final String fakultas;
   final String jurusan;
 
-  MahasiswaModel(
+  PersonalDataModel(
       {this.parentNama,
       this.parentEmail,
       this.nama,
@@ -24,8 +20,8 @@ class MahasiswaModel {
       this.fakultas,
       this.jurusan});
 
-  factory MahasiswaModel.fromJson(Map<String, dynamic> object) {
-    return MahasiswaModel(
+  factory PersonalDataModel.fromJson(Map<String, dynamic> object) {
+    return PersonalDataModel(
       parentNama: object["parent_nama"],
       parentEmail: object["parent_email"],
       nama: object["mhs_nama"],
@@ -38,11 +34,10 @@ class MahasiswaModel {
     );
   }
 
-  static Future<MahasiswaModel> connectToAPI(String parentNimMhs) async {
-    var apiResult = await http
-        .post(BaseUrl.dataMahasiswaURl, body: {"parent_nimmhs": parentNimMhs});
-    var jsonObject = jsonDecode(apiResult.body);
+  // static Future<PersonalDataModel> connectToAPI(String parentNimMhs) async {
+  //   var apiResult = await http.get(BaseUrl.dataPersonalDataURl + parentNimMhs);
+  //   var jsonObject = jsonDecode(apiResult.body);
 
-    return MahasiswaModel.fromJson(jsonObject);
-  }
+  //   return PersonalDataModel.fromJson(jsonObject);
+  // }
 }

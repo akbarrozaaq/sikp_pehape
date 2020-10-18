@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pehape_sikp/components/list_khs.dart';
+import 'package:pehape_sikp/components/list_matkul.dart';
 import 'package:pehape_sikp/constants.dart';
 import 'package:expansion_card/expansion_card.dart';
 
@@ -23,7 +23,7 @@ class CardKhs extends StatelessWidget {
             width: size.width * 0.9,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(29),
-              color: kBlueColor,
+              color: kYellowColor,
             ),
             child: ExpansionCard(
               trailing: Icon(
@@ -99,48 +99,48 @@ class CardKhs extends StatelessWidget {
                         height: 1.5,
                       ),
                       Padding(padding: EdgeInsets.only(top: 8.0)),
-                      ListKhs(
+                      ListMatkul(
                         namaMatkul:
                             "Pengantar Pemrograman dan Rekayasa Perangkat Lunak",
                         sksMatkul: 4.toString(),
                         nilaiMatkul: "A",
                       ),
-                      ListKhs(
+                      ListMatkul(
                         namaMatkul: "Lingkungan Komputasi",
                         sksMatkul: 3.toString(),
                         nilaiMatkul: "A-",
                       ),
-                      ListKhs(
+                      ListMatkul(
                         namaMatkul: "BAHASA INGGRIS I",
                         sksMatkul: 2.toString(),
                         nilaiMatkul: "B+",
                       ),
-                      ListKhs(
+                      ListMatkul(
                         namaMatkul: "Pancasila",
                         sksMatkul: 2.toString(),
                         nilaiMatkul: "A-",
                       ),
-                      ListKhs(
+                      ListMatkul(
                         namaMatkul: "Dampak Sosial Perkembangan Komputer",
                         sksMatkul: 2.toString(),
                         nilaiMatkul: "A-",
                       ),
-                      ListKhs(
+                      ListMatkul(
                         namaMatkul: "Fisika Dasar I",
                         sksMatkul: 2.toString(),
                         nilaiMatkul: "A",
                       ),
-                      ListKhs(
+                      ListMatkul(
                         namaMatkul: "Lingkungan Komputasi",
                         sksMatkul: 3.toString(),
                         nilaiMatkul: "A-",
                       ),
-                      ListKhs(
+                      ListMatkul(
                         namaMatkul: "Kalkulus I",
                         sksMatkul: 3.toString(),
                         nilaiMatkul: "A",
                       ),
-                      ListKhs(
+                      ListMatkul(
                         namaMatkul: "Praktikum Fisika Dasar I",
                         sksMatkul: 1.toString(),
                         nilaiMatkul: "A",

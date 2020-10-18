@@ -36,7 +36,7 @@ dependencies:
   get: ^3.4.2
   expansion_card: ^0.1.0
   lottie: ^0.6.0
-  provider: ^4.3.2+2
+  horizontal_data_table: ^1.0.6+3
 
 
 dev_dependencies:

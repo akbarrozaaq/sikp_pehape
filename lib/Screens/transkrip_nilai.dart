@@ -12,7 +12,8 @@ class _TranskripNilaiState extends State<TranskripNilai> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: kRedLightColor,
+      backgroundColor: kBlueLightColor,
+      appBar: CustomAppBar("Transkrip Nilai", kBlueColor, Colors.white),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -30,7 +31,7 @@ class _TranskripNilaiState extends State<TranskripNilai> {
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(30),
-                        border: Border.all(color: kRedColor, width: 2.0)),
+                        border: Border.all(color: kBlueColor, width: 2.0)),
                     padding: EdgeInsets.all(16.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -74,7 +75,7 @@ class _TranskripNilaiState extends State<TranskripNilai> {
                     child: Container(
                       padding: EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                          color: kRedColor,
+                          color: kBlueColor,
                           borderRadius: BorderRadius.circular(5)),
                       child: Text(
                         "Prestasi Akademik",
@@ -90,7 +91,7 @@ class _TranskripNilaiState extends State<TranskripNilai> {
               height: size.height * 0.03,
             ),
             Card(
-              color: kRedColor,
+              color: kBlueColor,
               elevation: 1,
               margin: EdgeInsets.all(size.width * 0.025),
               shape: RoundedRectangleBorder(
@@ -101,7 +102,7 @@ class _TranskripNilaiState extends State<TranskripNilai> {
                 height: size.height * 0.2,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(29),
-                  color: kRedColor,
+                  color: kBlueColor,
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -122,6 +123,122 @@ class _TranskripNilaiState extends State<TranskripNilai> {
                         ),
                         Text(
                           "1",
+                          style: TextStyle(
+                              fontSize: 40.0,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
+                    Divider(
+                      color: Colors.black,
+                      height: 1.5,
+                    ),
+                    Text("Semester : " + "Ganjil 2017/2018"),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Jumlah SKS : " + "3 SKS"),
+                        Padding(
+                            padding: EdgeInsets.only(right: size.width * 0.01),
+                            child: Text("Nilai : " + "A")),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Card(
+              color: kBlueColor,
+              elevation: 1,
+              margin: EdgeInsets.all(size.width * 0.025),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(29)),
+              child: Container(
+                padding: EdgeInsets.all(size.width * 0.05),
+                width: size.width * 0.9,
+                height: size.height * 0.2,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(29),
+                  color: kBlueColor,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: size.width * 0.6,
+                          child: Text(
+                            "Natural Language Processing",
+                            style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        Text(
+                          "2",
+                          style: TextStyle(
+                              fontSize: 40.0,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
+                    Divider(
+                      color: Colors.black,
+                      height: 1.5,
+                    ),
+                    Text("Semester : " + "Ganjil 2017/2018"),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Jumlah SKS : " + "3 SKS"),
+                        Padding(
+                            padding: EdgeInsets.only(right: size.width * 0.01),
+                            child: Text("Nilai : " + "B+")),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Card(
+              color: kBlueColor,
+              elevation: 1,
+              margin: EdgeInsets.all(size.width * 0.025),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(29)),
+              child: Container(
+                padding: EdgeInsets.all(size.width * 0.05),
+                width: size.width * 0.9,
+                height: size.height * 0.2,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(29),
+                  color: kBlueColor,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: size.width * 0.6,
+                          child: Text(
+                            "Data Mining",
+                            style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        Text(
+                          "3",
                           style: TextStyle(
                               fontSize: 40.0,
                               color: Colors.black,

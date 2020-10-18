@@ -33,11 +33,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final form = _key.currentState;
     if (form.validate()) {
       form.save(); //bikin counterflow disini disini
-      login();
+      signUp();
     }
   }
 
-  login() async {
+  signUp() async {
     if (nama.isEmpty || email.isEmpty || password.isEmpty) {
       Get.snackbar(
         "-",
@@ -160,7 +160,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
-  String pilihTanggal, labelText;
   DateTime tgl = new DateTime.now();
   final TextStyle valueStyle = TextStyle(fontSize: 16.0);
   Future<Null> _selectedDate(BuildContext context) async {
@@ -173,7 +172,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (picked != null && picked != tgl) {
       setState(() {
         tgl = picked;
-        pilihTanggal = new DateFormat.yMd().format(tgl);
+        mhstgllhr = new DateFormat('dd-MM-yyyy').format(tgl);
       });
     } else {}
   }
@@ -232,16 +231,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     hintText: "NPM Mahasiswa",
                     onChanged: (value) {},
                   ),
-                  DateDropDown(
-                    labelText: labelText,
-                    // valueText: tgl.toString(), //format tanggal lengkap
-                    valueText: new DateFormat.yMd()
-                        .format(tgl), // format tanggal biasa
-                    valueStyle: valueStyle,
-                    onPressed: () {
-                      _selectedDate(context);
-                    },
-                  ),
+                  // DateDropDown(
+                  //   // valueText: tgl.toString(), //format tanggal lengkap
+                  //   valueText: new DateFormat('dd-MM-yyyy')
+                  //       .format(tgl), // format tanggal biasa
+                  //   valueStyle: valueStyle,
+                  //   onPressed: () {
+                  //     _selectedDate(context);
+                  //   },
+                  // ),
                   RoundedInputField(
                     icon: Icons.event_note,
                     onSaved: (e) => mhstgllhr = e,
