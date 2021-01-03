@@ -38,6 +38,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   signUp() async {
+    print(mhsnpm);
+    print(mhstgllhr);
     if (nama.isEmpty || email.isEmpty || password.isEmpty) {
       Get.snackbar(
         "-",
@@ -231,21 +233,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     hintText: "NPM Mahasiswa",
                     onChanged: (value) {},
                   ),
-                  // DateDropDown(
-                  //   // valueText: tgl.toString(), //format tanggal lengkap
-                  //   valueText: new DateFormat('dd-MM-yyyy')
-                  //       .format(tgl), // format tanggal biasa
-                  //   valueStyle: valueStyle,
-                  //   onPressed: () {
-                  //     _selectedDate(context);
-                  //   },
-                  // ),
-                  RoundedInputField(
-                    icon: Icons.event_note,
-                    onSaved: (e) => mhstgllhr = e,
-                    hintText: "Tanggal Lahir Mahasiswa",
-                    onChanged: (value) {},
+                  DateDropDown(
+                    // valueText: tgl.toString(), //format tanggal lengkap
+                    valueText: new DateFormat('dd-MM-yyyy')
+                        .format(tgl), // format tanggal biasa
+                    valueStyle: valueStyle,
+                    onPressed: () {
+                      _selectedDate(context);
+                    },
                   ),
+                  // RoundedInputField(
+                  //   icon: Icons.event_note,
+                  //   onSaved: (e) => mhstgllhr = e,
+                  //   hintText: "Tanggal Lahir Mahasiswa",
+                  //   onChanged: (value) {},
+                  // ),
                   RoundedButton(
                     text: "SIGNUP",
                     press: () {

@@ -13,12 +13,6 @@ class Presensi extends StatefulWidget {
   _PresensiState createState() => _PresensiState();
 }
 
-// List namaMatkul = ["SPK", "Data Mining", "Sister"];
-// List sksMatkul = ["3", "3", "3"];
-// List namaDosen = ["Yusa", "Ruvita", "Arie"];
-// List tglMatkul = ["02-09-2020", "09-09-2020", "16-09-2020"];
-// List ketMatkul = ["Hadir", "Hadir", "Hadir"];
-
 class _PresensiState extends State<Presensi> {
   List<PresensiModel> presensiModel;
 
@@ -42,6 +36,21 @@ class _PresensiState extends State<Presensi> {
     });
     return presensiModel;
   }
+
+  // hitung_matkul() {
+  //   var elements = presensiModel;
+  //   var map = Map();
+
+  //   elements.forEach((element) {
+  //     if (!map.containsKey(element)) {
+  //       map[element] = 1;
+  //     } else {
+  //       map[element] += 1;
+  //     }
+  //   });
+
+  //   print(map);
+  // }
 
   @override
   void initState() {

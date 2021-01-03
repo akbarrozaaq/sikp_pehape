@@ -110,7 +110,7 @@ class _PersonalDataState extends State<PersonalData> {
                               Padding(
                                 padding: EdgeInsets.only(bottom: 16.0),
                                 child: Text(
-                                  personalDataModel.parentNama,
+                                  personalDataModel.parentNama.toUpperCase(),
                                   style: TextStyle(
                                     fontSize: 24,
                                     fontWeight: FontWeight.bold,
@@ -139,7 +139,7 @@ class _PersonalDataState extends State<PersonalData> {
                         ),
                       ),
                       child: Text(
-                        "${personalDataModel.parentNama[0]}",
+                        "${personalDataModel.parentNama[0].toUpperCase()}",
                         style: TextStyle(
                             fontSize: 30,
                             color: kRedColor,
@@ -191,7 +191,8 @@ class _PersonalDataState extends State<PersonalData> {
                           ),
                           Text("Prodi : " + personalDataModel.prodi),
                           Text("Fakultas : " + personalDataModel.fakultas),
-                          Text("Jurusan : " + personalDataModel.jurusan),
+                          if (personalDataModel.jurusan != null)
+                            Text("Jurusan : " + personalDataModel.jurusan),
                         ],
                       ),
                     ),
