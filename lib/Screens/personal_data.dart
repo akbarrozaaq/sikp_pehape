@@ -10,6 +10,8 @@ import 'package:pehape_sikp/service/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import '../constants.dart';
+
 class PersonalData extends StatefulWidget {
   @override
   _PersonalDataState createState() => _PersonalDataState();
@@ -30,19 +32,8 @@ class _PersonalDataState extends State<PersonalData> {
     return personalDataModel;
   }
 
-  // _fetchDataMahasiswa() async {
-  //   final response = await http.get(BaseUrl.dataMahasiswaURl + Get.arguments);
-  //   final data = jsonDecode(response.body);
-  //   print(data);
-  // }
-
   @override
   void initState() {
-    // WidgetsBinding.instance.addPostFrameCallback(
-    //     (_) => PersonalDataModel.connectToAPI(Get.arguments).then((value) {
-    //           PersonalDataModel = value;
-    //         }));
-    // _fetchDataMahasiswa();
     getMahasiswa();
     super.initState();
   }
@@ -70,7 +61,7 @@ class _PersonalDataState extends State<PersonalData> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: kRedLightColor,
+      backgroundColor: Colors.white,
       appBar: CustomAppBar("Personal Data", kRedColor, Colors.white),
       body: loading
           ? LoadingCrab()
@@ -96,7 +87,7 @@ class _PersonalDataState extends State<PersonalData> {
                           height: size.height * 0.2,
                           width: size.width,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: kRedLightColor,
                             borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(90),
                               bottomRight: Radius.circular(90),
@@ -168,7 +159,7 @@ class _PersonalDataState extends State<PersonalData> {
                   alignment: Alignment.center,
                   children: [
                     Container(
-                      height: size.height * 0.3,
+                      height: size.height * 0.25,
                       width: size.width * 0.9,
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -217,14 +208,15 @@ class _PersonalDataState extends State<PersonalData> {
                         width: size.width * 0.30,
                         child: Center(
                           child: Container(
-                            height: size.height * 0.20,
+                            height: size.height * 0.18,
                             width: size.width * 0.25,
                             decoration: BoxDecoration(
                               color: kPrimaryLightColor,
+                              border: Border.all(color: kRedColor, width: 1.0),
                               borderRadius: BorderRadius.circular(16),
                               image: DecorationImage(
                                 fit: BoxFit.fill,
-                                image: AssetImage('assets/images/pas foto.jpg'),
+                                image: AssetImage('assets/images/pas foto.png'),
                               ),
                             ),
                           ),
@@ -232,6 +224,9 @@ class _PersonalDataState extends State<PersonalData> {
                       ),
                     ),
                   ],
+                ),
+                SizedBox(
+                  height: size.height * 0.05,
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 10),

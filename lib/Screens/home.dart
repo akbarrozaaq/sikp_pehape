@@ -3,10 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:pehape_sikp/Screens/presensi.dart';
 import 'package:pehape_sikp/Screens/screens.dart';
 import 'package:pehape_sikp/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -15,6 +21,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String mhsNama = "", parentNama = "", parentNimMhs = "";
+  int semester = 2;
 
   getPref() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -39,11 +46,12 @@ class _HomeState extends State<Home> {
     // style
     var cardTextStyle = TextStyle(
         // fontFamily: "Montserrat Regular",
+        fontWeight: FontWeight.w500,
         fontSize: 14,
-        color: Color.fromRGBO(63, 63, 63, 1));
+        color: Colors.black);
 
     return Scaffold(
-      backgroundColor: kPrimaryLightColor,
+      backgroundColor: Colors.white,
       body: Stack(
         alignment: Alignment.center,
         children: <Widget>[
@@ -57,60 +65,52 @@ class _HomeState extends State<Home> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Padding(
-                          padding: EdgeInsets.only(top: 10),
-                          child: Container(
-                            child: Column(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(4),
-                                  decoration: BoxDecoration(
-                                    color: kBlueColor,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(8),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    "Nama Wali",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                color: kBlueLightColor,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(8),
                                 ),
-                                Text(
-                                  "$parentNama",
-                                  style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
+                              ),
+                              child: Text(
+                                "Nama Wali",
+                                style: TextStyle(color: Colors.black),
+                              ),
                             ),
-                          ),
+                            Text(
+                              "$parentNama",
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 10),
-                          child: Container(
-                            child: Column(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(4),
-                                  decoration: BoxDecoration(
-                                    color: kGreenColor,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(8),
-                                    ),
-                                  ),
-                                  child: Text("Nama Mahasiswa"),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                color: kGreenLightColor,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(8),
                                 ),
-                                Text(
-                                  "$mhsNama",
-                                  style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
+                              ),
+                              child: Text("Nama Mahasiswa"),
                             ),
-                          ),
+                            Text(
+                              "$mhsNama",
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         )
                       ],
                     ),
@@ -119,7 +119,7 @@ class _HomeState extends State<Home> {
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      border: Border.all(color: kPrimaryColor, width: 2),
+                      // border: Border.all(color: kPrimaryColor, width: 2),
                       borderRadius: BorderRadius.all(
                         Radius.circular(16),
                       ),
@@ -154,6 +154,7 @@ class _HomeState extends State<Home> {
                           onTap: () =>
                               Get.to(Presensi(), arguments: parentNimMhs),
                           child: Card(
+                            color: kPrimaryLightColor,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8)),
                             elevation: 4,
@@ -176,8 +177,10 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () => Get.to(KartuHasilStudi()),
+                          onTap: () => Get.to(KartuHasilStudi(),
+                              arguments: parentNimMhs),
                           child: Card(
+                            color: kYellowLightColor,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8)),
                             elevation: 4,
@@ -200,8 +203,10 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () => Get.to(TranskripNilai()),
+                          onTap: () =>
+                              Get.to(TranskripNilai(), arguments: parentNimMhs),
                           child: Card(
+                            color: kBlueLightColor,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8)),
                             elevation: 4,
@@ -228,6 +233,7 @@ class _HomeState extends State<Home> {
                             Get.to(PersonalData(), arguments: parentNimMhs);
                           },
                           child: Card(
+                            color: kRedLightColor,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8)),
                             elevation: 4,

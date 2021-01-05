@@ -11,3 +11,4 @@ export 'card_khs.dart';
 export 'loading.dart';
 export 'date_picker.dart';
 export 'list_presensi.dart';
+export 'size_text.dart';

@@ -9,7 +9,7 @@ class CustomDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.symmetric(vertical: size.height * 0.02),
+      margin: EdgeInsets.symmetric(vertical: size.height * 0.01),
       width: size.width * 0.6,
       child: Row(
         children: <Widget>[

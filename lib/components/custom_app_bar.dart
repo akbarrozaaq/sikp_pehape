@@ -12,8 +12,9 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
     return AppBar(
       backgroundColor: bgColor,
       iconTheme: IconThemeData(color: textColor),
-      elevation: 5.0,
+      elevation: 0.0,
       automaticallyImplyLeading: true,
+      centerTitle: true,
       title: Text(
         title,
         style: TextStyle(color: textColor, fontWeight: FontWeight.bold),

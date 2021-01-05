@@ -11,3 +11,11 @@ const kRedColor = Color(0xFFFF7081);
 const kRedLightColor = Color(0xFFFFEBED);
 const kGreenColor = Color(0xFF90EE90);
 const kGreenLightColor = Color(0xFFDCF9DC);
+
+class Styles {
+  static const chartLabelsTextStyle = TextStyle(
+    color: Colors.grey,
+    fontSize: 14.0,
+    fontWeight: FontWeight.w500,
+  );
+}

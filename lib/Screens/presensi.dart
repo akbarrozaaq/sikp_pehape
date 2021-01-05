@@ -1,11 +1,12 @@
 import 'dart:convert';
-import 'package:expansion_card/expansion_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:horizontal_data_table/horizontal_data_table.dart';
 import 'package:pehape_sikp/components/components.dart';
 import 'package:pehape_sikp/model/presensi_model.dart';
 import 'package:pehape_sikp/service/services.dart';
 import '../constants.dart';
+import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
 class Presensi extends StatefulWidget {
@@ -14,6 +15,7 @@ class Presensi extends StatefulWidget {
 }
 
 class _PresensiState extends State<Presensi> {
+  HDTRefreshController _hdtRefreshController = HDTRefreshController();
   List<PresensiModel> presensiModel;
 
   var loading = false;
@@ -37,21 +39,6 @@ class _PresensiState extends State<Presensi> {
     return presensiModel;
   }
 
-  // hitung_matkul() {
-  //   var elements = presensiModel;
-  //   var map = Map();
-
-  //   elements.forEach((element) {
-  //     if (!map.containsKey(element)) {
-  //       map[element] = 1;
-  //     } else {
-  //       map[element] += 1;
-  //     }
-  //   });
-
-  //   print(map);
-  // }
-
   @override
   void initState() {
     _getPresensi();
@@ -60,255 +47,155 @@ class _PresensiState extends State<Presensi> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: kPrimaryLightColor,
-      appBar: CustomAppBar("Presensi", kPrimaryColor, Colors.black87),
-      // body: loading
-      //     ? LoadingCrab()
-      //     : ListView.builder(
-      //         itemCount: presensiModel.length,
-      //         itemBuilder: (BuildContext context, int index) {
-      //           return Column(
-      //             children: [
-      //               SizedBox(
-      //                 height: 16.0,
-      //               ),
-      //               Center(
-      //                 child: Container(
-      //                   width: size.width * 0.9,
-      //                   decoration: BoxDecoration(
-      //                     borderRadius: BorderRadius.circular(29),
-      //                     color: kPrimaryColor,
-      //                   ),
-      //                   child: ExpansionCard(
-      //                     trailing: Icon(
-      //                       Icons.keyboard_arrow_down,
-      //                       color: Colors.black87,
-      //                     ),
-      //                     margin: EdgeInsets.all(10.0),
-      //                     borderRadius: 10.0,
-      //                     title: Container(
-      //                       child: Column(
-      //                         crossAxisAlignment: CrossAxisAlignment.start,
-      //                         children: <Widget>[
-      //                           Text(
-      //                             presensiModel[index].matkulNama,
-      //                             style: TextStyle(
-      //                                 fontSize: 20.0,
-      //                                 color: Colors.black87,
-      //                                 fontWeight: FontWeight.w600),
-      //                           ),
-      //                           SizedBox(
-      //                             height: 16.0,
-      //                           ),
-      //                           Row(
-      //                             mainAxisAlignment:
-      //                                 MainAxisAlignment.spaceBetween,
-      //                             children: [
-      //                               Text(
-      //                                 presensiModel[index].matkulSks + " Sks",
-      //                                 style: TextStyle(
-      //                                     fontSize: 16, color: Colors.black87),
-      //                               ),
-      //                             ],
-      //                           ),
-      //                         ],
-      //                       ),
-      //                     ),
-      //                     children: <Widget>[
-      //                       Divider(
-      //                         color: Colors.black87,
-      //                         height: 1.5,
-      //                       ),
-      //                       Container(
-      //                         child: Column(
-      //                           children: [
-      //                             SizedBox(
-      //                               height: 10.0,
-      //                             ),
-      //                             Row(
-      //                               mainAxisAlignment:
-      //                                   MainAxisAlignment.spaceEvenly,
-      //                               children: [
-      //                                 SizedBox(
-      //                                   width: size.width * 0.35,
-      //                                   child: Text(
-      //                                     "Tanggal",
-      //                                     style: TextStyle(
-      //                                         fontSize: 16,
-      //                                         color: Colors.black87),
-      //                                   ),
-      //                                 ),
-      //                                 SizedBox(
-      //                                   width: size.width * 0.35,
-      //                                   child: Text(
-      //                                     "Keterangan",
-      //                                     style: TextStyle(
-      //                                         fontSize: 16,
-      //                                         color: Colors.black87),
-      //                                   ),
-      //                                 ),
-      //                               ],
-      //                             ),
-      //                             SizedBox(
-      //                               height: 10.0,
-      //                             ),
-      //                             Divider(
-      //                               color: Colors.black87,
-      //                               height: 1.5,
-      //                             ),
-      //                             Padding(
-      //                               padding: const EdgeInsets.only(top: 5),
-      //                               child: Row(
-      //                                 mainAxisAlignment:
-      //                                     MainAxisAlignment.spaceEvenly,
-      //                                 children: [
-      //                                   SizedBox(
-      //                                     width: size.width * 0.35,
-      //                                     child: Text(
-      //                                       presensiModel[index].presensiTgl,
-      //                                       style: TextStyle(
-      //                                           fontSize: 16,
-      //                                           color: Colors.black87),
-      //                                     ),
-      //                                   ),
-      //                                   SizedBox(
-      //                                     width: size.width * 0.35,
-      //                                     child: Text(
-      //                                       presensiModel[index].presensiKet,
-      //                                       style: TextStyle(
-      //                                           fontSize: 16,
-      //                                           color: Colors.black87),
-      //                                     ),
-      //                                   ),
-      //                                 ],
-      //                               ),
-      //                             ),
-      //                             SizedBox(
-      //                               child: Divider(
-      //                                 height: 1.5,
-      //                                 color: Colors.black87,
-      //                               ),
-      //                               height: 16,
-      //                             ),
-      //                             Text(
-      //                               "Dosen Pengampu:",
-      //                               style: TextStyle(
-      //                                   fontSize: 16, color: Colors.black87),
-      //                             ),
-      //                             Text(
-      //                               presensiModel[index].matkulNamaDosen,
-      //                               style: TextStyle(
-      //                                   fontSize: 16, color: Colors.black87),
-      //                             ),
-      //                             SizedBox(
-      //                               height: 16,
-      //                             )
-      //                           ],
-      //                         ),
-      //                       )
-      //                     ],
-      //                   ),
-      //                 ),
-      //               ),
-      //             ],
-      //           );
-      //         },
-      //       ),
-      body: loading
-          ? LoadingCrab()
-          : ListView.builder(
-              itemCount: presensiModel.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Align(
-                  alignment: Alignment.center,
-                  child: Column(
-                    children: [
-                      Card(
-                        color: kPrimaryColor,
-                        elevation: 1,
-                        margin: EdgeInsets.all(size.width * 0.025),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(29)),
-                        child: Container(
-                          padding: EdgeInsets.all(size.width * 0.05),
-                          width: size.width * 0.9,
-                          height: size.height * 0.25,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(29),
-                            color: kPrimaryColor,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SizedBox(
-                                    width: size.width * 0.6,
-                                    child: Text(
-                                      presensiModel[index].matkulNama,
-                                      style: TextStyle(
-                                          fontSize: 20.0,
-                                          color: Colors.black87,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
-                                  Text(
-                                    presensiModel[index].matkulSks + " Sks",
-                                    style: TextStyle(
-                                        fontSize: 20.0,
-                                        color: Colors.black87,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 12,
-                                child: Divider(
-                                  color: Colors.black87,
-                                  height: 1.5,
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Tanggal : " +
-                                        presensiModel[index].presensiTgl,
-                                    style: TextStyle(color: Colors.black87),
-                                  ),
-                                  Text(
-                                    "Keterangan : " +
-                                        presensiModel[index].presensiKet,
-                                    style: TextStyle(color: Colors.black87),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 4,
-                              ),
-                              Center(
-                                child: Text(
-                                  "Dosen Pengampu : \n" +
-                                      presensiModel[index].matkulNamaDosen,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(color: Colors.black87),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+        backgroundColor: Colors.white,
+        appBar: CustomAppBar("Presensi", kPrimaryColor, Colors.white),
+        body: loading ? LoadingCrab() : _getBodyWidget());
+  }
+
+  Widget _getBodyWidget() {
+    return Container(
+      child: HorizontalDataTable(
+        leftHandSideColumnWidth: 100,
+        rightHandSideColumnWidth: 600,
+        isFixedHeader: true,
+        headerWidgets: _getTitleWidget(),
+        leftSideItemBuilder: _generateFirstColumnRow,
+        rightSideItemBuilder: _generateRightHandSideColumnRow,
+        itemCount: presensiModel.length,
+        rowSeparatorWidget: const Divider(
+          color: kPrimaryColor,
+          height: 1.0,
+          thickness: 0.5,
+        ),
+        leftHandSideColBackgroundColor: Color(0xFFFFFFFF),
+        rightHandSideColBackgroundColor: Color(0xFFFFFFFF),
+        enablePullToRefresh: true,
+        refreshIndicator: const WaterDropHeader(),
+        refreshIndicatorHeight: 60,
+        onRefresh: () async {
+          //Do sth
+          await Future.delayed(const Duration(milliseconds: 500));
+          _hdtRefreshController.refreshCompleted();
+        },
+        htdRefreshController: _hdtRefreshController,
+      ),
+      height: MediaQuery.of(context).size.height,
+    );
+  }
+
+  List<Widget> _getTitleWidget() {
+    return [
+      // FlatButton(
+      //   padding: EdgeInsets.all(0),
+      //   child: _getTitleItemWidget(
+      //       'Name' + (sortType == sortName ? (isAscending ? '↓' : '↑') : ''),
+      //       100),
+      //   onPressed: () {
+      //     sortType = sortName;
+      //     isAscending = !isAscending;
+      //     user.sortName(isAscending);
+      //     setState(() {});
+      //   },
+      // ),
+      // FlatButton(
+      //   padding: EdgeInsets.all(0),
+      //   child: _getTitleItemWidget(
+      //       'Status' +
+      //           (sortType == sortStatus ? (isAscending ? '↓' : '↑') : ''),
+      //       100),
+      //   onPressed: () {
+      //     sortType = sortStatus;
+      //     isAscending = !isAscending;
+      //     user.sortStatus(isAscending);
+      //     setState(() {});
+      //   },
+      // ),
+      _getTitleItemWidget('Tanggal', 200),
+      _getTitleItemWidget('Mata Kuliah', 200),
+      _getTitleItemWidget('Dosen Pengampu', 200),
+      _getTitleItemWidget('Sks', 50),
+      _getTitleItemWidget('Keterangan', 100),
+    ];
+  }
+
+  Widget _getTitleItemWidget(String label, double width) {
+    return Container(
+      child: Text(label, style: TextStyle(fontWeight: FontWeight.bold)),
+      width: width,
+      height: 56,
+      padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+      alignment: Alignment.centerLeft,
+    );
+  }
+
+  Widget _generateFirstColumnRow(BuildContext context, int index) {
+    var outputFormat = DateFormat('dd/MM/yyyy');
+    var outputDate =
+        outputFormat.format(DateTime.parse(presensiModel[index].presensiTgl));
+    return Container(
+      child: Text(outputDate),
+      width: 100,
+      height: 52,
+      padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+      alignment: Alignment.centerLeft,
+    );
+  }
+
+  Widget _generateRightHandSideColumnRow(BuildContext context, int index) {
+    return Row(
+      children: <Widget>[
+        // Container(
+        //   child: Row(
+        //     children: <Widget>[
+        //       Icon(
+        //           user.userInfo[index].status
+        //               ? Icons.notifications_off
+        //               : Icons.notifications_active,
+        //           color:
+        //               user.userInfo[index].status ? Colors.red : Colors.green),
+        //       Text(user.userInfo[index].status ? 'Disabled' : 'Active')
+        //     ],
+        //   ),
+        //   width: 100,
+        //   height: 52,
+        //   padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+        //   alignment: Alignment.centerLeft,
+        // ),
+        Container(
+          child: Text(presensiModel[index].matkulNama),
+          width: 200,
+          height: 52,
+          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+          alignment: Alignment.centerLeft,
+        ),
+        Container(
+          child: Text(presensiModel[index].matkulNamaDosen +
+              (presensiModel[index].matkulNamaDosen2 != null
+                  ? '\n' + presensiModel[index].matkulNamaDosen2
+                  : '')),
+          width: 200,
+          height: 52,
+          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+          alignment: Alignment.centerLeft,
+        ),
+        Container(
+          child: Text(presensiModel[index].matkulSks),
+          width: 50,
+          height: 52,
+          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+          alignment: Alignment.centerLeft,
+        ),
+        Container(
+          child: Text(presensiModel[index].presensiKet == 'H'
+              ? "Hadir"
+              : (presensiModel[index].presensiKet == 'A' ? 'Alpa' : 'Izin')),
+          width: 100,
+          height: 52,
+          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+          alignment: Alignment.centerLeft,
+        ),
+      ],
     );
   }
 }

@@ -4,6 +4,5 @@ export 'Welcome/welcome_screen.dart';
 export 'transkrip_nilai.dart';
 export 'khs.dart';
 export 'presensi.dart';
-export 'menu_dashboard.dart';
 export 'personal_data.dart';
 export 'home.dart';
