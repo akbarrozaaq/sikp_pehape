@@ -1,14 +1,13 @@
 import 'dart:convert';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:horizontal_data_table/horizontal_data_table.dart';
 import 'package:pehape_sikp/components/components.dart';
-import 'package:pehape_sikp/components/khs_grafik.dart';
 import 'package:pehape_sikp/constants.dart';
 import 'package:pehape_sikp/model/khs_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:pehape_sikp/model/pra_khs_model.dart';
+import 'package:pehape_sikp/model/khs_rumus_model.dart';
 import 'package:pehape_sikp/service/services.dart';
 
 class KartuHasilStudi extends StatefulWidget {
@@ -17,56 +16,39 @@ class KartuHasilStudi extends StatefulWidget {
 }
 
 class _KartuHasilStudiState extends State<KartuHasilStudi> {
+  HDTRefreshController _hdtRefreshController = HDTRefreshController();
   String _valSemester;
+  String npm = Get.arguments;
   List<dynamic> _dataIps = List();
+  var loading = false;
+
   void getIps() async {
     setState(() {
       loading = true;
     });
-    final respose = await http.get(BaseUrl.dataPraKhsURL +
-        Get.arguments); //untuk melakukan request ke webservice
-    var listData = jsonDecode(respose.body); //lalu kita decode hasil datanya
+    final response = await http.get(
+        BaseUrl.dataPraKhsURL + npm); //untuk melakukan request ke webservice
+    var listData = jsonDecode(response.body); //lalu kita decode hasil datanya
     setState(() {
       _dataIps = listData; // dan kita set kedalam variable _dataIps
     });
     setState(() {
       loading = false;
     });
+
     print("data : $listData");
   }
-  // List<PraKhsModel> praKhsModel;
-
-  // var loading = false;
-  // Future<List<PraKhsModel>> _getPraKhs() async {
-  //   setState(() {
-  //     loading = true;
-  //   });
-  //   final response = await http.get(BaseUrl.dataPraKhsURL + Get.arguments);
-  //   List res = jsonDecode(response.body);
-  //   List<PraKhsModel> data = [];
-  //   for (var i = 0; i < res.length; i++) {
-  //     var praKhs = PraKhsModel.fromJson(res[i]);
-  //     data.add(praKhs);
-  //   }
-
-  //   praKhsModel = data;
-
-  //   setState(() {
-  //     loading = false;
-  //   });
-  //   return praKhsModel;
-  // }
 
   List<KhsModel> khsModel;
-  var semid;
 
-  var loading = false;
+  var loadingnull = true;
+  var loading2 = false;
   Future<List<KhsModel>> _getKhs() async {
     setState(() {
-      loading = true;
+      loading2 = true;
     });
-    final response = await http
-        .get(BaseUrl.dataKhsURL + Get.arguments + "&krs_semid=" + semid);
+    final response =
+        await http.get(BaseUrl.dataKhsURL + npm + "&krs_semid=" + _valSemester);
     List res = jsonDecode(response.body);
     List<KhsModel> data = [];
     for (var i = 0; i < res.length; i++) {
@@ -77,199 +59,361 @@ class _KartuHasilStudiState extends State<KartuHasilStudi> {
     khsModel = data;
 
     setState(() {
-      loading = false;
+      loading2 = false;
     });
     return khsModel;
   }
 
+  var loading3 = false;
+  KhsRumusModel khsRumusModel;
+  Future<KhsRumusModel> _getKhsRumus() async {
+    setState(() {
+      loading3 = true;
+    });
+    final response = await http.get(BaseUrl.dataKhsRumusURL + npm + "&krs_semid=" + _valSemester);
+    khsRumusModel = KhsRumusModel.fromJson(jsonDecode(response.body));
+    setState(() {
+      loading3 = false;
+    });
+    return khsRumusModel;
+  }
+
+
   @override
   void initState() {
-    //_getPraKhs();
-    // _getKhs();
     getIps();
     super.initState();
   }
 
-  final covid19 = [12.17, 11.15, 10.02, 11.21, 13.83, 14.16, 14.30];
+  final List<Color> gradientColors = [
+    kBlueColor,
+    kGreenColor,
+  ];
 
   @override
   Widget build(BuildContext context) {
+    //Size size = MediaQuery.of(context).size;
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: CustomAppBar("Kartu Hasil Studi", kYellowColor, Colors.white),
-        body: loading
-            ? LoadingCrab()
-            : Column(
-                children: [
-                  SliverPadding(
-                    padding: const EdgeInsets.only(top: 20.0),
-                    sliver: SliverToBoxAdapter(
-                      //child: KhsGrafik(covidCases: covid19),
-                      child: Container(
-                        height: 350.0,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20.0),
-                            topRight: Radius.circular(20.0),
-                          ),
-                        ),
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              padding: const EdgeInsets.all(20.0),
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Daily New Cases',
-                                style: TextStyle(
-                                  fontSize: 22.0,
+      backgroundColor: Colors.white,
+      appBar: CustomAppBar("Kartu Hasil Studi", kYellowColor, Colors.white),
+      body: loading
+          ? LoadingCrab()
+          : Column(
+              children: [
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                    color: kYellowLightColor,
+                    width: double.infinity,
+                    child: Card(
+                      elevation: 4,
+                      // shape: RoundedRectangleBorder(
+                      //   borderRadius: BorderRadius.circular(32),
+                      // ),
+                      color: kYellowLightColor,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 16, right: 16),
+                        child: LineChart(
+                          LineChartData(
+                            minX: 0,
+                            maxX: 8,
+                            minY: 0,
+                            maxY: 4,
+                            titlesData: FlTitlesData(
+                              show: true,
+                              bottomTitles: SideTitles(
+                                showTitles: true,
+                                reservedSize: 35,
+                                getTextStyles: (value) => const TextStyle(
+                                  color: kBlueColor,
                                   fontWeight: FontWeight.bold,
+                                  fontSize: 16,
                                 ),
+                                getTitles: (value) {
+                                  switch (value.toInt()) {
+                                    case 1:
+                                      return 'I';
+                                    case 2:
+                                      return 'II';
+                                    case 3:
+                                      return 'III';
+                                    case 4:
+                                      return 'IV';
+                                    case 5:
+                                      return 'V';
+                                    case 6:
+                                      return 'VI';
+                                    case 7:
+                                      return 'VII';
+                                    case 8:
+                                      return 'VIII';
+                                    case 9:
+                                      return 'IX';
+                                    case 10:
+                                      return 'X';
+                                    case 11:
+                                      return 'XI';
+                                    case 12:
+                                      return 'XII';
+                                    case 13:
+                                      return 'XIII';
+                                    case 14:
+                                      return 'XIV';
+                                  }
+                                  return '';
+                                },
+                                margin: 8,
+                              ),
+                              leftTitles: SideTitles(
+                                showTitles: true,
+                                getTextStyles: (value) => const TextStyle(
+                                  color: kBlueColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
+                                getTitles: (value) {
+                                  switch (value.toInt()) {
+                                    case 1:
+                                      return '1.00';
+                                    case 2:
+                                      return '2.00';
+                                    case 3:
+                                      return '3.00';
+                                    case 4:
+                                      return '4.00';
+                                  }
+                                  return '';
+                                },
+                                reservedSize: 35,
+                                margin: 12,
                               ),
                             ),
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.85,
-                              child: BarChart(
-                                BarChartData(
-                                  alignment: BarChartAlignment.spaceAround,
-                                  maxY: 16.0,
-                                  barTouchData: BarTouchData(
-                                    enabled: false,
-                                  ),
-                                  titlesData: FlTitlesData(
-                                    show: true,
-                                    bottomTitles: SideTitles(
-                                      margin: 10.0,
-                                      showTitles: true,
-                                      //textStyle: Styles.chartLabelsTextStyle,
-                                      rotateAngle: 35.0,
-                                      getTitles: (double value) {
-                                        switch (value.toInt()) {
-                                          case 0:
-                                            return 'May 24';
-                                          case 1:
-                                            return 'May 25';
-                                          case 2:
-                                            return 'May 26';
-                                          case 3:
-                                            return 'May 27';
-                                          case 4:
-                                            return 'May 28';
-                                          case 5:
-                                            return 'May 29';
-                                          case 6:
-                                            return 'May 30';
-                                          default:
-                                            return '';
-                                        }
-                                      },
-                                    ),
-                                    leftTitles: SideTitles(
-                                      margin: 10.0,
-                                      showTitles: true,
-                                      // textStyle: Styles.chartLabelsTextStyle,
-                                      getTitles: (value) {
-                                        if (value == 0) {
-                                          return '0';
-                                        } else if (value % 3 == 0) {
-                                          return '${value ~/ 3 * 5}K';
-                                        }
-                                        return '';
-                                      },
-                                    ),
-                                  ),
-                                  gridData: FlGridData(
-                                    show: true,
-                                    checkToShowHorizontalLine: (value) =>
-                                        value % 3 == 0,
-                                    getDrawingHorizontalLine: (value) => FlLine(
-                                      color: Colors.black12,
-                                      strokeWidth: 1.0,
-                                      dashArray: [5],
-                                    ),
-                                  ),
-                                  borderData: FlBorderData(show: false),
-                                  barGroups: covid19
-                                      .asMap()
-                                      .map(
-                                        (key, value) => MapEntry(
-                                          key,
-                                          BarChartGroupData(
-                                            x: key,
-                                            barRods: [
-                                              BarChartRodData(
-                                                y: value,
-                                                colors: [Colors.red],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      )
-                                      .values
+                            gridData: FlGridData(
+                              show: true,
+                              getDrawingHorizontalLine: (value) {
+                                return FlLine(
+                                  color: const Color(0xff37434d),
+                                  strokeWidth: 1,
+                                );
+                              },
+                              drawVerticalLine: true,
+                              getDrawingVerticalLine: (value) {
+                                return FlLine(
+                                  color: const Color(0xff37434d),
+                                  strokeWidth: 1,
+                                );
+                              },
+                            ),
+                            borderData: FlBorderData(
+                              show: true,
+                              border: Border.all(
+                                  color: const Color(0xff37434d), width: 1),
+                            ),
+                            lineBarsData: [
+                              LineChartBarData(
+                                spots: _dataIps == null
+                                    ? FlSpot(0, 0)
+                                    : _dataIps.map((item) {
+                                        return FlSpot(
+                                            double.parse(item['krs_semid']),
+                                            double.parse(item['ips']));
+                                      }).toList(),
+
+                                // spots: [
+                                //   FlSpot(0, 0),
+                                //   FlSpot(1, 2),
+                                //   FlSpot(2.6, 2),
+                                //   FlSpot(4.9, 4),
+                                //   FlSpot(6.8, 2.5),
+                                //   FlSpot(8, 4),
+                                // ],
+                                isCurved: true,
+                                colors: gradientColors,
+                                barWidth: 5,
+                                // dotData: FlDotData(show: false),
+                                belowBarData: BarAreaData(
+                                  show: true,
+                                  colors: gradientColors
+                                      .map((color) => color.withOpacity(0.3))
                                       .toList(),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  DropdownButton(
-                    hint: Text("Pilih Semester"),
-                    value: _valSemester,
-                    items: _dataIps.map((item) {
-                      return DropdownMenuItem(
-                        child: Text(item['krs_semid'].toString()),
-                        value: item['krs_semid'].toString(),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        _valSemester = value;
-                      });
-                    },
+                ),
+                Container(
+                  padding: EdgeInsets.only(left: 8, right: 8),
+                  decoration: BoxDecoration(
+                      color: kBlueLightColor,
+                      borderRadius: BorderRadius.circular(18)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      DropdownButton(
+                        hint: Text("Pilih Semester"),
+                        value: _valSemester,
+                        items: _dataIps.map((item) {
+                          return DropdownMenuItem(
+                            child: Text(item['krs_semid'].toString()),
+                            value: item['krs_semid'].toString(),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _valSemester = value;
+                          });
+                          print(value);
+                        },
+                      ),
+                      SizedBox(
+                        width: 16,
+                      ),
+                      RaisedButton(
+                        color: kBlueColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          //side: BorderSide(color: Colors.blue),
+                        ),
+                        child: Text('Pilih'),
+                        onPressed: () {
+                          _getKhs();
+                          _getKhsRumus();
+                          setState(() {
+                            loadingnull = false;
+                          });
+                        },
+                      ),
+                    ],
                   ),
-                  Text(
-                    "Kamu memilih semester $_valSemester",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
+                ),
+                Expanded(
+                  flex: 8,
+                  child: loadingnull
+                      ? Container()
+                      : loading2
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : _getBodyWidget(),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Material(
+                    elevation: 4,
+                    child: Container(
+                      color: kYellowColor,
+                      child: loadingnull
+                      ? Container() : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Jumlah SKS diambil : ' + (loading3 ? "" : khsRumusModel.jumlahSks??"")),
+                              Text('Jumlah mata kuliah diambil : ' +(loading3 ? "" : khsRumusModel.jumlahMatkul??"")),
+                            ],
+                          ),
+                          Text('IP Semester : ' + (loading3 ? "" : khsRumusModel.rataNilai??"")),
+                        ],
+                      ),
+                    ),
                   ),
-                ],
-              )
-        //   ListView(
-        // children: [
-        //   CardKhs(
-        //     namaSemester: "Ganjil 2017/2018",
-        //     sksSemester: 19.toString(),
-        //   ),
-        //   CardKhs(
-        //     namaSemester: "Genap 2017/2018",
-        //     sksSemester: 20.toString(),
-        //   ),
-        //   CardKhs(
-        //     namaSemester: "Ganjil 2018/2019",
-        //     sksSemester: 24.toString(),
-        //   ),
-        //   CardKhs(
-        //     namaSemester: "Genap 2018/2019",
-        //     sksSemester: 24.toString(),
-        //   ),
-        //   CardKhs(
-        //     namaSemester: "Ganjil 2019/2020",
-        //     sksSemester: 22.toString(),
-        //   ),
-        //   CardKhs(
-        //     namaSemester: "Genap 2019/2020",
-        //     sksSemester: 20.toString(),
-        //   ),
-        //   SizedBox(
-        //     height: 32.0,
-        //   )
-        // ],
-        //),
-        );
+                ),
+              ],
+            ),
+    );
+  }
+
+  Widget _getBodyWidget() {
+    return Container(
+      child: HorizontalDataTable(
+        leftHandSideColumnWidth: 150,
+        rightHandSideColumnWidth: 300,
+        isFixedHeader: true,
+        headerWidgets: _getTitleWidget(),
+        leftSideItemBuilder: _generateFirstColumnRow,
+        rightSideItemBuilder: _generateRightHandSideColumnRow,
+        itemCount: khsModel.length,
+        rowSeparatorWidget: const Divider(
+          color: kPrimaryColor,
+          height: 1.0,
+          thickness: 0.5,
+        ),
+        leftHandSideColBackgroundColor: Color(0xFFFFFFFF),
+        rightHandSideColBackgroundColor: Color(0xFFFFFFFF),
+        enablePullToRefresh: true,
+        refreshIndicator: const WaterDropHeader(),
+        refreshIndicatorHeight: 60,
+        onRefresh: () async {
+          //Do sth
+          await Future.delayed(const Duration(milliseconds: 500));
+          _hdtRefreshController.refreshCompleted();
+        },
+        htdRefreshController: _hdtRefreshController,
+      ),
+      height: MediaQuery.of(context).size.height,
+    );
+  }
+
+  List<Widget> _getTitleWidget() {
+    return [
+      _getTitleItemWidget('Nama Mata Kuliah', 150),
+      _getTitleItemWidget('Semester', 100),
+      _getTitleItemWidget('Sks', 100),
+      _getTitleItemWidget('Nilai', 100),
+    ];
+  }
+
+  Widget _getTitleItemWidget(String label, double width) {
+    return Container(
+      child: Text(label, style: TextStyle(fontWeight: FontWeight.bold)),
+      width: width,
+      height: 56,
+      padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+      alignment: Alignment.centerLeft,
+    );
+  }
+
+  Widget _generateFirstColumnRow(BuildContext context, int index) {
+    return Container(
+      child: Text(khsModel[index].matkulNama),
+      width: 300,
+      height: 52,
+      padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+      alignment: Alignment.centerLeft,
+    );
+  }
+
+  Widget _generateRightHandSideColumnRow(BuildContext context, int index) {
+    return Row(
+      children: <Widget>[
+        Container(
+          child: Text(khsModel[index].semester),
+          width: 100,
+          height: 52,
+          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+          alignment: Alignment.centerLeft,
+        ),
+        Container(
+          child: Text(khsModel[index].matkulSks),
+          width: 100,
+          height: 52,
+          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+          alignment: Alignment.centerLeft,
+        ),
+        Container(
+          child: Text(khsModel[index].nilaiHuruf ?? ""),
+          width: 100,
+          height: 52,
+          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+          alignment: Alignment.centerLeft,
+        ),
+      ],
+    );
   }
 }

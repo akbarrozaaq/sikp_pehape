@@ -14,4 +14,6 @@ class BaseUrl {
   //G1A017036&krs_semid=1
   static String dataPraKhsURL =
       "http://10.0.2.2/rest-api-siphp/api/dataPraKhs.php?mhs_nim=";
+  static String dataKhsRumusURL =
+      "http://10.0.2.2/rest-api-siphp/api/dataKhsRumus.php?mhs_nim=";
 }

@@ -86,34 +86,9 @@ class _PresensiState extends State<Presensi> {
 
   List<Widget> _getTitleWidget() {
     return [
-      // FlatButton(
-      //   padding: EdgeInsets.all(0),
-      //   child: _getTitleItemWidget(
-      //       'Name' + (sortType == sortName ? (isAscending ? '↓' : '↑') : ''),
-      //       100),
-      //   onPressed: () {
-      //     sortType = sortName;
-      //     isAscending = !isAscending;
-      //     user.sortName(isAscending);
-      //     setState(() {});
-      //   },
-      // ),
-      // FlatButton(
-      //   padding: EdgeInsets.all(0),
-      //   child: _getTitleItemWidget(
-      //       'Status' +
-      //           (sortType == sortStatus ? (isAscending ? '↓' : '↑') : ''),
-      //       100),
-      //   onPressed: () {
-      //     sortType = sortStatus;
-      //     isAscending = !isAscending;
-      //     user.sortStatus(isAscending);
-      //     setState(() {});
-      //   },
-      // ),
       _getTitleItemWidget('Tanggal', 200),
       _getTitleItemWidget('Mata Kuliah', 200),
-      _getTitleItemWidget('Dosen Pengampu', 200),
+      _getTitleItemWidget('Dosen Pengampu', 250),
       _getTitleItemWidget('Sks', 50),
       _getTitleItemWidget('Keterangan', 100),
     ];
@@ -145,23 +120,6 @@ class _PresensiState extends State<Presensi> {
   Widget _generateRightHandSideColumnRow(BuildContext context, int index) {
     return Row(
       children: <Widget>[
-        // Container(
-        //   child: Row(
-        //     children: <Widget>[
-        //       Icon(
-        //           user.userInfo[index].status
-        //               ? Icons.notifications_off
-        //               : Icons.notifications_active,
-        //           color:
-        //               user.userInfo[index].status ? Colors.red : Colors.green),
-        //       Text(user.userInfo[index].status ? 'Disabled' : 'Active')
-        //     ],
-        //   ),
-        //   width: 100,
-        //   height: 52,
-        //   padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-        //   alignment: Alignment.centerLeft,
-        // ),
         Container(
           child: Text(presensiModel[index].matkulNama),
           width: 200,
@@ -174,7 +132,7 @@ class _PresensiState extends State<Presensi> {
               (presensiModel[index].matkulNamaDosen2 != null
                   ? '\n' + presensiModel[index].matkulNamaDosen2
                   : '')),
-          width: 200,
+          width: 250,
           height: 52,
           padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,

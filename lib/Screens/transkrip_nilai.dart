@@ -8,8 +8,6 @@ import 'package:pehape_sikp/constants.dart';
 import 'package:pehape_sikp/model/transkrip_model.dart';
 import 'package:pehape_sikp/model/transkriprumus_model.dart';
 import 'package:pehape_sikp/service/services.dart';
-
-import '../components/components.dart';
 import '../components/components.dart';
 import '../constants.dart';
 
@@ -201,13 +199,16 @@ class _TranskripNilaiState extends State<TranskripNilai> {
                     SizedBox(
                       height: size.height * 0.01,
                     ),
-                    Container(
-                      color: kBlueLightColor,
-                      child: SizedBox(
-                        height: size.height * 0.05,
-                        child: Center(
-                          child: CustomDivider(
-                            text: 'Mata Kuliah',
+                    Material(
+                      elevation: 2,
+                      child: Container(
+                        color: kBlueLightColor,
+                        child: SizedBox(
+                          height: size.height * 0.05,
+                          child: Center(
+                            child: CustomDivider(
+                              text: 'Mata Kuliah',
+                            ),
                           ),
                         ),
                       ),
