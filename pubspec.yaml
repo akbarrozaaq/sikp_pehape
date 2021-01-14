@@ -35,7 +35,6 @@ dependencies:
   lottie: ^0.7.0+1
   horizontal_data_table: ^2.0.0
   auto_size_text: ^2.1.0
-  expansion_card: ^0.1.0
   fl_chart: ^0.12.2
 
 dev_dependencies:

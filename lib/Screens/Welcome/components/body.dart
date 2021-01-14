@@ -17,7 +17,7 @@ class Body extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "Welcome To SI PHP",
+              "Welcome to SI PHP",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             Text(

@@ -50,7 +50,10 @@ class _PresensiState extends State<Presensi> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: CustomAppBar("Presensi", kPrimaryColor, Colors.white),
-        body: loading ? LoadingCrab() : _getBodyWidget());
+        body: loading ? LoadingCrab() : Padding(
+          padding: const EdgeInsets.only(left : 16.0, right: 16.0),
+          child: _getBodyWidget(),
+        ));
   }
 
   Widget _getBodyWidget() {

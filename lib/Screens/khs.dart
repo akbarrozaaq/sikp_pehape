@@ -70,14 +70,14 @@ class _KartuHasilStudiState extends State<KartuHasilStudi> {
     setState(() {
       loading3 = true;
     });
-    final response = await http.get(BaseUrl.dataKhsRumusURL + npm + "&krs_semid=" + _valSemester);
+    final response = await http
+        .get(BaseUrl.dataKhsRumusURL + npm + "&krs_semid=" + _valSemester);
     khsRumusModel = KhsRumusModel.fromJson(jsonDecode(response.body));
     setState(() {
       loading3 = false;
     });
     return khsRumusModel;
   }
-
 
   @override
   void initState() {
@@ -112,7 +112,7 @@ class _KartuHasilStudiState extends State<KartuHasilStudi> {
                       // ),
                       color: kYellowLightColor,
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 16, right: 16),
+                        padding: const EdgeInsets.only(top: 32, right: 16),
                         child: LineChart(
                           LineChartData(
                             minX: 0,
@@ -125,7 +125,7 @@ class _KartuHasilStudiState extends State<KartuHasilStudi> {
                                 showTitles: true,
                                 reservedSize: 35,
                                 getTextStyles: (value) => const TextStyle(
-                                  color: kBlueColor,
+                                  color: kGreenColor,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
                                 ),
@@ -248,11 +248,11 @@ class _KartuHasilStudiState extends State<KartuHasilStudi> {
                 Container(
                   padding: EdgeInsets.only(left: 8, right: 8),
                   decoration: BoxDecoration(
-                      color: kBlueLightColor,
-                      borderRadius: BorderRadius.circular(18)),
+                    //color: kBlueLightColor,
+                    //borderRadius: BorderRadius.circular(18),
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
                     children: [
                       DropdownButton(
                         hint: Text("Pilih Semester"),
@@ -279,7 +279,7 @@ class _KartuHasilStudiState extends State<KartuHasilStudi> {
                           borderRadius: BorderRadius.circular(18.0),
                           //side: BorderSide(color: Colors.blue),
                         ),
-                        child: Text('Pilih'),
+                        child: Text('Pilih', style: TextStyle(color: Colors.white),),
                         onPressed: () {
                           _getKhs();
                           _getKhsRumus();
@@ -308,19 +308,32 @@ class _KartuHasilStudiState extends State<KartuHasilStudi> {
                     child: Container(
                       color: kYellowColor,
                       child: loadingnull
-                      ? Container() : Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text('Jumlah SKS diambil : ' + (loading3 ? "" : khsRumusModel.jumlahSks??"")),
-                              Text('Jumlah mata kuliah diambil : ' +(loading3 ? "" : khsRumusModel.jumlahMatkul??"")),
-                            ],
+                          ? Container()
+                          : Container(padding: EdgeInsets.all(4),
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Text('Jumlah SKS diambil : ' +
+                                          (loading3
+                                              ? ""
+                                              : khsRumusModel.jumlahSks ?? "")),
+                                      Text('Jumlah mata kuliah diambil : ' +
+                                          (loading3
+                                              ? ""
+                                              : khsRumusModel.jumlahMatkul ??
+                                                  "")),
+                                    ],
+                                  ),
+                                  Text('IP Semester : ' +
+                                      (loading3
+                                          ? ""
+                                          : khsRumusModel.rataNilai ?? "")),
+                                ],
+                              ),
                           ),
-                          Text('IP Semester : ' + (loading3 ? "" : khsRumusModel.rataNilai??"")),
-                        ],
-                      ),
                     ),
                   ),
                 ),
@@ -332,8 +345,8 @@ class _KartuHasilStudiState extends State<KartuHasilStudi> {
   Widget _getBodyWidget() {
     return Container(
       child: HorizontalDataTable(
-        leftHandSideColumnWidth: 150,
-        rightHandSideColumnWidth: 300,
+        leftHandSideColumnWidth: 200,
+        rightHandSideColumnWidth: 210,
         isFixedHeader: true,
         headerWidgets: _getTitleWidget(),
         leftSideItemBuilder: _generateFirstColumnRow,
@@ -362,27 +375,27 @@ class _KartuHasilStudiState extends State<KartuHasilStudi> {
 
   List<Widget> _getTitleWidget() {
     return [
-      _getTitleItemWidget('Nama Mata Kuliah', 150),
-      _getTitleItemWidget('Semester', 100),
-      _getTitleItemWidget('Sks', 100),
-      _getTitleItemWidget('Nilai', 100),
+      _getTitleItemWidget('Nama Mata Kuliah', 200, Alignment.centerLeft),
+      _getTitleItemWidget('Semester', 70, Alignment.center),
+      _getTitleItemWidget('Sks', 70, Alignment.center),
+      _getTitleItemWidget('Nilai', 70, Alignment.center),
     ];
   }
 
-  Widget _getTitleItemWidget(String label, double width) {
+  Widget _getTitleItemWidget(String label, double width, AlignmentGeometry align) {
     return Container(
       child: Text(label, style: TextStyle(fontWeight: FontWeight.bold)),
       width: width,
       height: 56,
       padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-      alignment: Alignment.centerLeft,
+      alignment: align,
     );
   }
 
   Widget _generateFirstColumnRow(BuildContext context, int index) {
     return Container(
       child: Text(khsModel[index].matkulNama),
-      width: 300,
+      width: 200,
       height: 52,
       padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
       alignment: Alignment.centerLeft,
@@ -394,23 +407,23 @@ class _KartuHasilStudiState extends State<KartuHasilStudi> {
       children: <Widget>[
         Container(
           child: Text(khsModel[index].semester),
-          width: 100,
+          width: 70,
           height: 52,
-          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+          padding: EdgeInsets.fromLTRB(35, 0, 0, 0),
           alignment: Alignment.centerLeft,
         ),
         Container(
           child: Text(khsModel[index].matkulSks),
-          width: 100,
+          width: 70,
           height: 52,
-          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+          padding: EdgeInsets.fromLTRB(35, 0, 0, 0),
           alignment: Alignment.centerLeft,
         ),
         Container(
           child: Text(khsModel[index].nilaiHuruf ?? ""),
-          width: 100,
+          width: 70,
           height: 52,
-          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+          padding: EdgeInsets.fromLTRB(35, 0, 0, 0),
           alignment: Alignment.centerLeft,
         ),
       ],

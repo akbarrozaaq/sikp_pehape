@@ -6,13 +6,8 @@ import 'package:get/get.dart';
 import 'package:pehape_sikp/Screens/screens.dart';
 import 'package:pehape_sikp/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../constants.dart';
 
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -163,7 +158,7 @@ class _HomeState extends State<Home> {
                               children: <Widget>[
                                 SvgPicture.asset(
                                   'assets/icons/icon_presensi.svg',
-                                  height: 120,
+                                  height: 100,
                                 ),
                                 SizedBox(
                                   height: 10,
@@ -189,7 +184,7 @@ class _HomeState extends State<Home> {
                               children: <Widget>[
                                 SvgPicture.asset(
                                   'assets/icons/icon_khs.svg',
-                                  height: 120,
+                                  height: 100,
                                 ),
                                 SizedBox(
                                   height: 10,
@@ -215,7 +210,7 @@ class _HomeState extends State<Home> {
                               children: <Widget>[
                                 SvgPicture.asset(
                                   'assets/icons/icon_transkrip_nilai.svg',
-                                  height: 120,
+                                  height: 100,
                                 ),
                                 SizedBox(
                                   height: 10,
@@ -242,7 +237,7 @@ class _HomeState extends State<Home> {
                               children: <Widget>[
                                 SvgPicture.asset(
                                   'assets/icons/icon_profil.svg',
-                                  height: 120,
+                                  height: 100,
                                 ),
                                 SizedBox(
                                   height: 10,
